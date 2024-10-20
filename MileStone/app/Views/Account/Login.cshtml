@@ -1,0 +1,24 @@
+@model LoginViewModel
+
+<form asp-action="Login" method="post">
+    <div>
+        <label asp-for="Username"></label>
+        <input asp-for="Username" type="text" />
+        <span asp-validation-for="Username"></span>
+    </div>
+
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <button type="submit">Login</button>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div style="color: red;">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+</form>
