@@ -12,7 +12,7 @@ public class AccountController : Controller
         _context = context;
     }
 
-    // Display the login form (GET)
+    
     [HttpGet]
     public IActionResult Login()
     {
@@ -21,11 +21,11 @@ public class AccountController : Controller
 
 
 
-   // Handle the login form submission (POST)
+   // handling the login form submission (POST)
 [HttpPost]
 public async Task<IActionResult> Login(LoginViewModel model)
 {
-    // Validate the model
+    // Validates the model
     if (!ModelState.IsValid)
     {
         ViewBag.ErrorMessage = "Both fields are required.";
@@ -34,45 +34,50 @@ public async Task<IActionResult> Login(LoginViewModel model)
 
     try
     {
-        // Find the user by username
+        //  user by username
         var user = await _context.Users.SingleOrDefaultAsync(u => u.Username == model.Username);
 
         // Check if user exists and if the password matches
         if (user != null && BCrypt.Net.BCrypt.Verify(model.Password, user.Password))
         {
-            // Set the user’s status in a session variable
+            // Setting the user’s status in a session variable
             HttpContext.Session.SetString("UserStatus", "LoggedIn");
             HttpContext.Session.SetString("Username", model.Username);
 
-            // Optionally, you can also store other user-specific data in the session if needed
+            
             HttpContext.Session.SetInt32("UserId", user.Id);
 
-            // Redirect to the success page (or dashboard)
-            return RedirectToAction("Success");
+            // Redirect to the MainMenu page 
+            return RedirectToAction("MainMenu");
         }
         else
         {
-            // If credentials are incorrect, set the error message
+            // If credentials are incorrect---> set the error message
             ViewBag.ErrorMessage = "Invalid username or password.";
-            return View(model); // Re-render the view with the error
+            return View(model); 
         }
     }
     catch (Exception ex)
     {
-        // Log the exception (use logging framework in production)
-        ViewBag.ErrorMessage = "An error occurred. Please try again later.";
+        // Log the exception
+        ViewBag.ErrorMessage = "An error occurred. Please try again later." + ex;
         return View(model);
     }
 }
 
+    [HttpGet]
+        public IActionResult MainMenu()
+        {
+            return View();
+        }
 
-    // Display success page if login is successful
+    //  success page if login is successful
     public IActionResult Success()
     {
         return View();
     }
 
-    // Display error page if login fails
+    // error page if login fails
     public IActionResult Error()
     {
         return View();

@@ -6,4 +6,12 @@ public class HomeController : Controller
     {
         return View();
     }
+     public IActionResult Rules()
+        {
+            return View();
+        }
+     public IActionResult Privacy()
+        {
+            return View();
+        }
 }
