@@ -20,3 +20,28 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 40px);
+  gap: 4px;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  background-color: lightgray;
+  border: 1px solid #ddd;
+}
+
+.cell.revealed {
+  background-color: white;
+}
+
+.cell.mine {
+  background-image: url('/images/mine.png');
+}
+
+.cell.flagged {
+  background-image: url('/images/flag.png');
+}
