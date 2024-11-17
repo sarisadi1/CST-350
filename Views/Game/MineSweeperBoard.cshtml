@@ -1,0 +1,52 @@
+@model Board
+
+<h2>Minesweeper Board</h2>
+<p>Last updated: <span id="timestamp">@DateTime.Now</span></p>
+
+<div class="board">
+    @for (int i = 0; i < Model.Rows; i++)
+    {
+        <div class="row">
+            @for (int j = 0; j < Model.Columns; j++)
+            {
+                var cell = Model.Cells[i][j];
+                <div class="cell" id="cell-@i-@j">
+                    <button class="cell @(cell.IsRevealed ? "revealed" : "")"
+                            data-row="@i"
+                            data-col="@j">
+                        @(cell.IsRevealed ? (cell.IsMine ? "*" : cell.AdjacentMines.ToString()) : (cell.IsFlagged ? "F" : ""))
+                    </button>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).on('click', '.cell', function () {
+        var row = $(this).data('row');
+        var col = $(this).data('col');
+
+        $.post('/Game/RevealCell', { row: row, col: col }, function (result) {
+            if (result.gameOver) {
+                window.location.href = result.redirectUrl;
+            } else {
+                $('#cell-' + row + '-' + col).html(result);
+                $('#timestamp').text(new Date().toLocaleTimeString());
+            }
+        });
+    });
+
+    $(document).on('contextmenu', '.cell', function (e) {
+        e.preventDefault();
+
+        var row = $(this).data('row');
+        var col = $(this).data('col');
+
+        $.post('/Game/ToggleFlag', { row: row, col: col }, function (result) {
+            $('#cell-' + row + '-' + col).html(result);
+            $('#timestamp').text(new Date().toLocaleTimeString());
+        });
+    });
+</script>

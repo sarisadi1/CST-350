@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="alert alert-info text-center mt-5">
+                    <h2>Welcome! Please choose an option.</h2>
+                    <div class="mt-4">
+                        <a href="@Url.Action("Register", "Register")" class="btn btn-primary btn-lg">Register</a>
+                        <a href="@Url.Action("Login", "Account")" class="btn btn-success btn-lg ml-3">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

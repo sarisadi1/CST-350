@@ -1,0 +1,28 @@
+@model Cell
+
+@if (!Model.IsRevealed)
+{
+    if (Model.IsFlagged)
+    {
+        <img src="@Url.Content("~/images/MINESWEEPER_F.png")" alt="Flag" class="cell-image" />
+    }
+    else
+    {
+        <img src="@Url.Content("~/images/MINESWEEPER_0.png")" alt="Unrevealed" class="cell-image" />
+    }
+}
+else
+{
+    if (Model.IsMine)
+    {
+        <img src="@Url.Content("~/images/MINESWEEPER_M.png")" alt="Mine" class="cell-image" />
+    }
+    else if (Model.AdjacentMines > 0)
+    {
+        <img src="@Url.Content($"~/images/MINESWEEPER_{Model.AdjacentMines}.png")" alt="Number @Model.AdjacentMines" class="cell-image" />
+    }
+    else
+    {
+        <img src="@Url.Content("~/images/MINESWEEPER_tray.png")" alt="Empty" class="cell-image" />
+    }
+}
