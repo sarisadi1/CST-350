@@ -110,7 +110,6 @@ using app.Models;
             }
             else if (Cells[row][col].AdjacentMines == 0)
             {
-                // Flood fill for empty cells
                 int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
                 int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
                 for (int k = 0; k < 8; k++)
