@@ -31,6 +31,7 @@ public class RegisterController : Controller
             _context.Users.Add(user);
             // Save asynchronously
             await _context.SaveChangesAsync();  
+            HttpContext.Session.SetInt32("UserId", user.Id); 
             return RedirectToAction("Success");
         }
 
